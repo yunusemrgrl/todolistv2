@@ -69,3 +69,18 @@ ul li.checked::before {
   right: 10px;
   top: 10px;
 }
+
+.edit-btn {
+  background: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  font-size: 0.7rem;
+  margin: 0 0.15rem;
+  transition: var(--transition);
+}
+.edit-btn {
+  color: var(--clr-green-light);
+}
+.edit-btn:hover {
+  color: var(--clr-green-dark);
+}
