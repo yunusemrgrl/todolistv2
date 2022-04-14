@@ -1,16 +1,12 @@
-
-
-// Accesing DDOM element 
+// Accesing DDOM element
 
 const form = document.querySelector("form");
 const input = document.querySelector("#textInput");
 const list = document.querySelector("#list");
 
-//  display item on the loaded page 
+//  display item on the loaded page
 
-window.addEventListener("DomContentLoaded", function () {
-
-});
+window.addEventListener("DOMContentLoaded", setupItems);
 
 form.addEventListener("submit", addItem);
 
@@ -34,39 +30,36 @@ function addItem(e) {
         const attr = document.createAttribute("data-id");
         element.setAttributeNode(attr);
         attr.value = id;
-        list.appendChild(element);
+
         element.innerHTML = `<p class="title">${value}</p>
         <button type="button" class="edit-btn">
         <i class="fas fa-edit"></i>        
-           <button type="button" id="deleteButton"  class="btn-close"></button>`;
+        <button type="button" id="deleteButton"  class="btn-close"></button>`;
+
         ALERT.innerHTML = displayAlert(
             "Başarılı Ekleme :) ",
             "Ekleme işlemi tamamlandı.. Lütfen eklemenizi unutmayın ve tamamlamaya çalışın. Kalbim sizinle güç bizimle ! olsun ",
             "success"
         );
 
+        list.appendChild(element);
         inputText.value = value;
         inputText.id = id;
         inputText.isCompleted = isCompleted;
         cart.push(inputText);
-        console.log(cart);
+        // console.log(cart);
 
-        addToLocalStorage(inputText)
+        addToLocalStorage(inputText);
 
         setBackDefault();
-
-
     } else if (value.trim() !== "" && editFlag) {
-
         editElement.innerHTML = value;
 
-        // edit local storage 
-        editLocalStorage(editID, value)
+        // edit local storage
+        editLocalStorage(editID, value);
 
         setBackDefault();
-
-    }
-    else {
+    } else {
         ALERT.innerHTML = displayAlert(
             "Hatalı Ekleme!   ",
             "Boş ekleme yapamazsınız. Lütfen ekleme yapmak istediğiniz içeriği belirtilen alana yazarak gönderiniz !",
@@ -75,7 +68,7 @@ function addItem(e) {
     }
 }
 
-// display alert 
+// display alert
 const ALERT = document.querySelector(".alert");
 
 const displayAlert = (title, message, className) => `
@@ -96,23 +89,25 @@ ALERT.addEventListener("click", function (e) {
 
 // list click event
 
+
 list.addEventListener("click", function (e) {
     // console.log(e.target);
-    if (e.target.tagName === "LI") {
+    if (e.target.tagName === "LI" && e.target.dataset.id !== "") {
         e.target.classList.toggle("checked");
+        console.log(e.target);
+
     } else if (e.target.classList.contains("btn-close")) {
         const element = e.target.parentElement;
-        const id = element.dataset.id
+        const id = element.dataset.id;
         list.removeChild(element);
-        removeFromLocalStorage(id)
+        removeFromLocalStorage(id);
+        setBackDefault();
     } else {
-
         const element = e.target.parentElement;
 
-        // set edit item    
+        // set edit item
 
         editElement = e.target.parentElement.previousElementSibling;
-
 
         // set form value
 
@@ -122,12 +117,10 @@ list.addEventListener("click", function (e) {
 
         editID = element.parentElement.dataset.id;
         // submitBtn.textContent = "Edit Text";
-
-
     }
 });
 
-// set back default 
+// set back default
 
 const setBackDefault = () => {
     input.value = "";
@@ -150,11 +143,9 @@ function addToLocalStorage(inputText) {
     let items = getLocalStorage();
     items.push(temp);
     localStorage.setItem("list", JSON.stringify(items));
-
 }
 
-
-// remove localstorage item 
+// remove localstorage item
 
 function removeFromLocalStorage(id) {
     let items = getLocalStorage();
@@ -173,15 +164,54 @@ function removeFromLocalStorage(id) {
 // edit localstorage item
 
 function editLocalStorage(id, value) {
-
     let items = getLocalStorage();
 
     items = items.filter(function (item) {
-
         if (item.inputText.id == id) {
-            item.inputText.value = value
+            item.inputText.value = value;
         }
         return item;
     });
     localStorage.setItem("list", JSON.stringify(items));
+}
+
+// edit local storage item isCompleted True
+
+function editLocalStorage(id, value) {
+    let items = getLocalStorage();
+
+    items = items.filter(function (item) {
+        if (item.inputText.id == id) {
+            item.inputText.value = value;
+        }
+        return item;
+    });
+    localStorage.setItem("list", JSON.stringify(items));
+}
+
+//  setup items for window loaded
+
+function setupItems() {
+    let items = getLocalStorage();
+    if (items.length > 0) {
+        items.forEach((item) => {
+            createListItem(item.inputText.value, item.inputText.id);
+        });
+    }
+    // console.log(items);
+}
+
+// creating list element content
+
+function createListItem(value, id) {
+    const element = document.createElement("li");
+    const attr = document.createAttribute("data-id");
+    element.setAttributeNode(attr);
+    attr.value = id;
+
+    element.innerHTML = `<p class="title">${value}</p>
+    <button type="button" class="edit-btn">
+    <i class="fas fa-edit"></i>        
+    <button type="button" id="deleteButton"  class="btn-close"></button>`;
+    list.appendChild(element);
 }
