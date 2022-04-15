@@ -81,3 +81,6 @@ ul li.checked::before {
   right: 50px;
   top: 7px;
 }
+.show-content {
+  visibility: visible;
+}

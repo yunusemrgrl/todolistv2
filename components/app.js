@@ -3,6 +3,7 @@
 const form = document.querySelector("form");
 const input = document.querySelector("#textInput");
 const list = document.querySelector("#list");
+const footerContent = document.querySelector("#footer-content")
 
 //  display item on the loaded page
 
@@ -48,6 +49,8 @@ function addItem(e) {
         inputText.isCompleted = isCompleted;
         cart.push(inputText);
         // console.log(cart);
+
+        footerContent.classList.remove("invisible")
 
         addToLocalStorage(inputText);
 
@@ -102,6 +105,9 @@ list.addEventListener("click", function (e) {
         list.removeChild(element);
         removeFromLocalStorage(id);
         setBackDefault();
+        closeFooterContent()
+
+
     } else {
         const element = e.target.parentElement;
 
@@ -196,6 +202,7 @@ function setupItems() {
     if (items.length > 0) {
         items.forEach((item) => {
             createListItem(item.inputText.value, item.inputText.id);
+            footerContent.classList.remove("invisible")
         });
     }
     // console.log(items);
@@ -214,4 +221,13 @@ function createListItem(value, id) {
     <i class="fas fa-edit"></i>        
     <button type="button" id="deleteButton"  class="btn-close"></button>`;
     list.appendChild(element);
+}
+
+// invisible footer content ? list item lenght = 0 
+
+function closeFooterContent() {
+    let items = getLocalStorage();
+    if (items.length == 0) {
+        footerContent.classList.add("invisible")
+    }
 }
