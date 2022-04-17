@@ -11,19 +11,41 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Document</title>
   </head>
-    <div class="alert"></div>  
+  <body>
+    <div class="alert"></div>
     <div class="container mt-5">
       <div class="row">
+        <!-- **** ******** header *********** -->
+
         <header class="text-center">
           <h1>Todo List</h1>
-          
         </header>
         <form id="form">
+          <!--  ********** main input and submit button  -->
+
           <div class="input-group mb-3">
-            <input type="text" class="form-control" id="textInput" placeholder="What needs to be done?" autofocus/>
+            <button
+              class="btn btn-outline-secondary"
+              type="chexbox"
+              id="checkedAll"
+            >
+              O
+            </button>
+            <input
+              type="text"
+              class="form-control"
+              id="textInput"
+              placeholder="What needs to be done?"
+            />
             <button
               class="btn btn-outline-secondary"
               type="submit"
@@ -34,30 +56,52 @@
           </div>
           <div class="content-list">
             <!-- *********  List Content *****  -->
+
             <ul class="list-group" id="list"></ul>
           </div>
+
+          <!-- ************ Foooter Buttons ********** -->
+
           <footer class="footer-container">
-            <div class="d-flex justify-content-between pt-3 invisible" id="footer-content">
+            <div
+              class="d-flex justify-content-between pt-3 invisible"
+              id="footer-content"
+            >
               <article class="d-flex align-items-center">
                 <p class="text-secondary">(1) item left</p>
               </article>
               <article class="btn-group" role="group">
-                <button type="button" class="btn btn-outline-primary">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary footer-button"
+                  value="all"
+                >
                   All
                 </button>
                 <button
                   type="button"
-                  class="btn btn-outline-primary"
+                  class="btn btn-outline-primary footer-button"
                   id="display-all-item"
+                  value="active"
                 >
                   Active
                 </button>
-                <button type="button" class="btn btn-outline-primary" id="display-active-item">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary footer-button"
+                  id="display-active-item"
+                  value="completed"
+                >
                   Completed
                 </button>
               </article>
               <article>
-                <button type="button" class="btn btn-outline-danger" id="display-completed-item">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger footer-button"
+                  id="display-completed-item"
+                  value="clear_completed"
+                >
                   Clear Completed
                 </button>
               </article>
@@ -67,6 +111,5 @@
       </div>
     </div>
     <script src="app.js"></script>
-    
   </body>
 </html>
