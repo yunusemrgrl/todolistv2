@@ -5,6 +5,7 @@ const input = document.querySelector("#textInput");
 const list = document.querySelector("#list");
 const footerContent = document.querySelector("#footer-content")
 const footerBtn = document.querySelectorAll(".footer-button")
+const submitBtn = document.querySelector("#button-addon2")
 
 //  display item on the loaded page
 
@@ -52,23 +53,18 @@ function addItem(e) {
         inputText.id = id;
         inputText.isCompleted = isCompleted;
         cart.push(inputText);
-        // console.log(cart);
-
+        // hidde footer content
         footerContent.classList.remove("invisible")
-
         addToLocalStorage(inputText);
-
         setBackDefault();
         showItemLeft();
+
     } else if (value.trim() !== "" && editFlag) {
         editElement.innerHTML = value;
-
         // edit local storage
         editLocalStorage(editID, value);
-
         setBackDefault();
     } else {
-
         ALERT.innerHTML = displayAlert(
             "Hatalı Ekleme!   ",
             "Boş ekleme yapamazsınız. Lütfen ekleme yapmak istediğiniz içeriği belirtilen alana yazarak gönderiniz !",
@@ -93,7 +89,6 @@ const displayAlert = (title, message, className) => `
 
 
 // alert close button
-
 const alertBtn = document.querySelector("#alert-close-button");
 ALERT.addEventListener("click", function (e) {
     if (e.target.classList.contains("btn-close")) {
@@ -103,14 +98,11 @@ ALERT.addEventListener("click", function (e) {
 });
 
 // list click event
-
-
 list.addEventListener("click", function (e) {
     // console.log(e.target);
     if (e.target.tagName === "LI" && e.target.dataset.id !== "" && e.target.tagName !== "I") {
 
         e.target.classList.toggle("checked");
-        console.log(e.target);
         const element = e.target;
         const id = element.dataset.id;
         editLocalStorageIsComplete(id)
@@ -125,7 +117,7 @@ list.addEventListener("click", function (e) {
         closeFooterContent()
 
 
-    } else {
+    } else if (e.target.parentElement.classList.contains("edit-btn")) {
         const element = e.target.parentElement;
 
         // set edit item
@@ -139,7 +131,7 @@ list.addEventListener("click", function (e) {
         editFlag = true;
 
         editID = element.parentElement.dataset.id;
-        // submitBtn.textContent = "Edit Text";
+        submitBtn.textContent = "Edit";
     }
     showItemLeft();
 });
@@ -151,6 +143,7 @@ const setBackDefault = () => {
     editElement = "";
     editId = "";
     editFlag = false;
+    submitBtn.innerHTML = "Submit"
 };
 
 // ***************** LOCALSTORAGE **************//
@@ -233,7 +226,6 @@ function setupItems() {
 
         });
     }
-    // console.log(items);
 }
 
 // creating list element content
@@ -307,6 +299,7 @@ footerBtn.forEach((btn) => {
     });
 });
 
+// filter setup for footer button 
 
 function setupFilterItems(checkedItems) {
     const items = checkedItems
@@ -317,7 +310,7 @@ function setupFilterItems(checkedItems) {
 
         });
     }
-    // console.log(items);
+
 }
 
 // creating list element content
@@ -338,6 +331,8 @@ function createFilterListItem(value, id, isCompleted) {
     }
 }
 
+// show how many items left 
+
 const itemLeft = document.querySelector(".text-secondary")
 
 function showItemLeft() {
@@ -352,27 +347,39 @@ function showItemLeft() {
     }
     itemLeft.innerHTML = `${tmp} item left`
 }
-// showItemLeft();
+
+// checkbox completed or !completed all items 
 
 const checkedAllItems = document.querySelector("#checkedAll")
 
-checkedAllItems.addEventListener("click", () => {
-
+checkedAllItems.addEventListener("click", (e) => {
+    e.preventDefault();
     checkedAll()
 })
 
 function checkedAll() {
     const items = getLocalStorage()
-
+    const every = items.every((item) => item.inputText.isCompleted == true)
     if (items.length > 0) {
 
-        items.forEach((item) => {
-            item.inputText.isCompleted = true;
-            if (item.inputText.isCompleted == true) {
-                item.inputText.isCompleted = false;
-            }
-        });
+
+
+        if (every) {
+            items.map((item) => {
+                item.inputText.isCompleted = !item.inputText.isCompleted;
+            })
+        }
+        else {
+            items.map((item) => {
+                item.inputText.isCompleted = true;
+            })
+        }
+
         localStorage.setItem("list", JSON.stringify(items));
         window.location.reload()
+
+
     }
+
 }
+

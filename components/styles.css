@@ -34,6 +34,7 @@ ul li {
   list-style-type: none;
   border-radius: 15px;
   text-align: center;
+  margin-top: 10px;
 
   -webkit-user-select: none;
   -moz-user-select: none;
