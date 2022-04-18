@@ -1,3 +1,6 @@
-# todolistv2
+# TODOLIST APP
+<br>
 
-[ Click !! TodoList App ](https://yunusemrgrl.github.io/index.html)
+
+
+[Todolist App Demo](https://yunusemrgrl.github.io/index.html)
