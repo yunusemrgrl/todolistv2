@@ -6,7 +6,7 @@ Projede kodları yazarken açıklama satırları kullanmaya ve HTML kısmında s
 
 
 
-[Todolist App Demo](https://yunusemrgrl.github.io/index.html)
+## [Todolist App Demo](https://yunusemrgrl.github.io/index.html)
 
 * DOM manipülasyonu 
 HTML taglerine erişim
